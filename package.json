@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "nodemon": "^1.12.1",
+    "readline-sync": "^1.4.7"
+  }
+}
