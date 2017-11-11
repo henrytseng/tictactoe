@@ -83,7 +83,14 @@ class Board {
     return null;
   }
 
-  display() {
+  displaySimple() {
+    _stdout.write(`${Date.now()} ${this.list()}`);
+    _stdout.write("\n");
+    return this;
+  }
+
+  displayVerbose() {
+    _stdout.write(`${Date.now()}`);
     _stdout.write("\n");
     for(var j=0; j<this.size(); j++) {
       let _row = this._state[j].map(function(n) {
@@ -94,6 +101,21 @@ class Board {
       _stdout.write("\n");
     }
     return this;
+  }
+
+  display() {
+    return this.displayVerbose();
+  }
+
+  list() {
+    let list = [];
+    let i, j;
+    for(i=0; i<this.size(); i++) {
+      for(j=0; j<this.size(); j++) {
+        list.push(this._state[i][j]);
+      }
+    }
+    return list.map((i) => (i == null) ? "-" : i).join('');
   }
 
   reset() {

@@ -8,33 +8,48 @@ class Game {
   constructor() {
     this._board = (new Board()).reset();
     this._computer = (new Computer()).setBoard(this._board);
+
+    // Initialize with computer AI
+    this.getPlayer1 = function(move) {
+      return this._computer.findRandom();
+    };
+    this.getPlayer2 = function(move) {
+      return this._computer.findRandom();
+    };
   }
 
   size() {
     return this._board.size();
   }
 
-  step(getPlayerMove) {
+  step() {
     const _self = this;
+    let list;
 
+    // Player 1
     this._board.display();
-
     try {
-      getPlayerMove(function(i, j) {
-        _self._board.place(i, j, 'X');
-      });
+      list = this.getPlayer1();
+      _self._board.place(list[0], list[1], 'X');
+      
+    } catch(e) {
+      console.error(e.message);
+      return;
+    }
+    if(this.isEndGame()) return;
+
+    // Player 2
+    this._board.display();
+    try {
+      list = this.getPlayer2();
+      _self._board.place(list[0], list[1], 'O');
+
     } catch(e) {
       console.error(e.message);
       return;
     }
 
     if(this.isEndGame()) return;
-
-    // var moveList = this._computer.findBestMove();
-    // if(moveList) {
-    //   this._computer.makeMove(moveList[0], moveList[1]);
-    //   this._board.display();
-    // }
   }
 
   isEndGame() {
