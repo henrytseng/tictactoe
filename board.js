@@ -104,7 +104,7 @@ class Board {
   }
 
   display() {
-    return this.displayVerbose();
+    return this.displaySimple();
   }
 
   list() {
