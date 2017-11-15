@@ -1,7 +1,7 @@
 'use strict';
 
 const async = require('async');
-const Game = require('./game');
+const Game = require('./lib/game');
 
 // Initialize data Object
 var _game = new Game();
