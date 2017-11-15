@@ -3,6 +3,7 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "async": "^2.6.0",
     "nodemon": "^1.12.1",
     "readline-sync": "^1.4.7"
   },

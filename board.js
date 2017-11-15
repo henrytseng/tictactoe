@@ -4,12 +4,17 @@ const _stdout = process.stdout;
 
 class Board {
 
+  constructor() {
+    this._turn = 0;
+  }
+
   size() {
     return 3;
   }
 
   place(i, j, player) {
     if(this.isAvailable(i, j)) {
+      this._turn++;
       this._state[i][j] = player;
 
     } else {
@@ -45,9 +50,9 @@ class Board {
     let winner;
 
     let isSame = function(list) {
-      return list.reduce((a, e) => { 
+      return list.reduce((a, e) => {
         if(a == null) return a;
-        return a == e ? e : null; 
+        return a == e ? e : null;
       });
     };
 
@@ -84,13 +89,13 @@ class Board {
   }
 
   displaySimple() {
-    _stdout.write(`${Date.now()} ${this.list()}`);
+    _stdout.write(`${this._turn} ${this.list()}`);
     _stdout.write("\n");
     return this;
   }
 
   displayVerbose() {
-    _stdout.write(`${Date.now()}`);
+    _stdout.write(`${this._turn}`);
     _stdout.write("\n");
     for(var j=0; j<this.size(); j++) {
       let _row = this._state[j].map(function(n) {
@@ -129,6 +134,7 @@ class Board {
         this._state[i][j] = null;
       }
     }
+    this._turn = 0;
     return this;
   }
 }

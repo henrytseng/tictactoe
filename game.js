@@ -1,67 +1,80 @@
 'use strict';
 
+const async = require('async');
 const Board = require('./board');
-const Computer = require('./computer');
+const Computer = require('./player/computer');
 
 class Game {
 
   constructor() {
-    this._board = (new Board()).reset();
+    this._board = (new Board())
     this._computer = (new Computer()).setBoard(this._board);
+    this.reset();
 
     // Initialize with computer AI
-    this.getPlayer1 = function(move) {
-      return this._computer.findRandom();
-    };
-    this.getPlayer2 = function(move) {
-      return this._computer.findRandom();
-    };
+    this.player1Move = function(callback) {
+      callback(null, this._computer.findRandom());
+    }.bind(this);
+    this.player2Move = function(callback) {
+      callback(null, this._computer.findRandom());
+    }.bind(this);
   }
 
   size() {
     return this._board.size();
   }
 
-  step() {
-    const _self = this;
-    let list;
+  reset() {
+    this._turn = 'X';
+    this._winner = null;
+    this._draw = false;
+    this._board.reset();
+  }
 
-    // Player 1
+  step(callback) {
+    let _self = this;
+
+    async.mapSeries([
+      this.player1Move,
+      this.player2Move
+    ], (getMove, next) => {
+      try {
+        _self._turn = (_self._turn == 'X') ? 'O' : 'X';
+        getMove((err, coord) => {
+          _self._board.place(coord[0], coord[1], this._turn);
+          if(_self.isEndGame()) {
+            return _self.end(next);
+          }
+
+          _self._board.display();
+          next();
+        });
+      } catch(e) {
+        console.error(e);
+        return;
+      }
+    }, callback);
+  }
+
+  end(callback) {
     this._board.display();
-    try {
-      list = this.getPlayer1();
-      _self._board.place(list[0], list[1], 'X');
-      
-    } catch(e) {
-      console.error(e.message);
-      return;
+    if(this._winner) {
+      console.log(`Winner is ${this._winner}.`);
+    } else {
+      console.log(`Draw.`);
     }
-    if(this.isEndGame()) return;
-
-    // Player 2
-    this._board.display();
-    try {
-      list = this.getPlayer2();
-      _self._board.place(list[0], list[1], 'O');
-
-    } catch(e) {
-      console.error(e.message);
-      return;
-    }
-
-    if(this.isEndGame()) return;
+    this.reset();
+    callback();
   }
 
   isEndGame() {
     let winner = this._board.getWinner();
     if(winner) {
-      this._board.display().reset();
-      console.log(`Winner is ${winner}.`);
+      this._winner = winner;
       return true;
 
     } else if(this._board.isFull()) {
-      this._board.display().reset();
-      console.log(`Draw.`);
+      this._draw = true;
       return true;
     }
 
