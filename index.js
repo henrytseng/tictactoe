@@ -34,6 +34,7 @@ var _getUserMove = function(callback) {
 };
 
 // Run game loop
+_game.start();
 async.whilst(() => true, (next) => {
   process.nextTick(() => {
     _game.step(next);
