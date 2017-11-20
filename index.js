@@ -3,7 +3,7 @@
 /**
  * Module dependencies
  */
-const config = require('./config')();
+const config = require(process.cwd()+'/config')();
 const async = require('async');
 const glob = require('glob');
 const mongoose = require('mongoose');
@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
 // Load models
 mongoose.connect(config.database['mongodb.app'], { useMongoClient: true });
 mongoose.Promise = global.Promise;
-glob.sync('./lib/models/**/*.js')
+glob.sync(process.cwd()+'/lib/models/**/*.js')
   .forEach((filename) => {
     console.log(`Initializing models:`);
     require(filename);
