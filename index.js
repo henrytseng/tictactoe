@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
 mongoose.connect(config.database['mongodb.app'], { useMongoClient: true });
 mongoose.Promise = global.Promise;
 
-const Game = require('./lib/game');
+const Game = require(process.cwd()+'/lib/game');
 
 // Initialize game
 var _game = new Game();
@@ -23,6 +23,7 @@ var i;
 var argr = Argr()
   .option(['x', 'player1'], 'Player 1, X player (human, bad, mimic)', 'bad')
   .option(['o', 'player2'], 'Player 2, O player (human, bad, mimic)', 'bad')
+  .option(['b', 'board-size'], 'Game board size, (n x n)', 3)
   .option(['v', 'verbose'], 'Verbose debugging mode', false)
   .option(['h', '?', 'help'], 'Display help')
   .useStrict(true)
@@ -62,10 +63,11 @@ if(argr.get('h')) {
   _game.setPlayer(token, argr.get(token));
 });
 
+// Set game board size
+if(argr.get('b')) _game.setBoardSize(argr.get('b'))
+
 // Debugging
-if(argr.get('v')) {
-  _game.verbose();
-}
+if(argr.get('v')) _game.verbose();
 
 // Run game loop
 _game.start();
