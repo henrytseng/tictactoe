@@ -8,14 +8,9 @@ const async = require('async');
 const glob = require('glob');
 const mongoose = require('mongoose');
 
-// Load models
+// Initialize connection
 mongoose.connect(config.database['mongodb.app'], { useMongoClient: true });
 mongoose.Promise = global.Promise;
-glob.sync(process.cwd()+'/lib/models/**/*.js')
-  .forEach((filename) => {
-    console.log(`Initializing models:`);
-    require(filename);
-  });
 
 const Game = require('./lib/game');
 

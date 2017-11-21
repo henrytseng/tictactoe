@@ -21,16 +21,14 @@ db.getCollection('rounds').find({winner: 'X'});
 
 
 db.getCollection('rounds').aggregate([
-    { $match: { state: "-OO-XX---" } },
+    { $match: { 'initiatedBy.state': "-OO-XX---" } },
     { $group: {
-        _id: '$next.state',
-        i: { $first: '$next.move.i' },
-        j: { $first: '$next.move.j' },
+        _id: '$state',
+        move: { $first: '$move' },
         'wins': { $sum: { $cond: [ { $eq: ["$winner", 'X'] },1,0 ] } },
         'losses': { $sum: { $cond: [ { $eq: ["$winner", 'O'] },1,0 ] } },
         'total': { $sum: 1 }
     } },
     { $sort: { total: -1 } }
 // ], { explain: true })
-])
-```
+])```
