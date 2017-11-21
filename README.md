@@ -3,6 +3,21 @@
 A self playing tic tac toe game
 
 
+
+## Usage
+
+To run use:
+
+```
+node index.js
+```
+
+For command line arguments
+
+```
+node index -?
+
+
 ## Computer Players
 
 #### BadComputer
