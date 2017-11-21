@@ -2,33 +2,19 @@
 
 A self playing tic tac toe game
 
-Find best move according to win-loss rate calculatin of next possible move
 
-```
-// db.getCollection('rounds').drop();
-db.getCollection('rounds').count();
+## Computer Players
 
-db.getCollection('rounds').find({winner: 'X'});
+#### BadComputer
 
-// db.getCollection('rounds').aggregate([
-//     { $project: {
-//         'state': true,
-//         'move.i': true,
-//         'move.j': true,
-//         'next.state': true
-//     } }
-// ]);
+Find a random move to make
 
 
-db.getCollection('rounds').aggregate([
-    { $match: { 'initiatedBy.state': "-OO-XX---" } },
-    { $group: {
-        _id: '$state',
-        move: { $first: '$move' },
-        'wins': { $sum: { $cond: [ { $eq: ["$winner", 'X'] },1,0 ] } },
-        'losses': { $sum: { $cond: [ { $eq: ["$winner", 'O'] },1,0 ] } },
-        'total': { $sum: 1 }
-    } },
-    { $sort: { total: -1 } }
-// ], { explain: true })
-])```
+#### MimicComputer
+
+Finds ratio of winning games according to the state of the game board.  
+
+
+## Human Player
+
+Allows for user input to play computer
