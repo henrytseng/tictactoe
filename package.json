@@ -1,4 +1,11 @@
 {
+  "name": "tictactoe3",
+  "version": "1.0.0",
+  "description": "A simple tic-tac-toe game implementation with simple AI.",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:henrytseng/tictactoe.git"
+  },
   "scripts": {
     "start": "node index.js"
   },
@@ -10,5 +17,6 @@
     "nodemon": "^1.12.1",
     "readline-sync": "^1.4.7"
   },
-  "author": "Henry Tseng <henry@heycanvas.com> (http://www.heycanvas.com/)"
+  "author": "Henry Tseng <contact@henrytseng.com> (http://www.henrytseng.com/)",
+  "license": "MIT"
 }
