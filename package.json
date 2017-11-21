@@ -6,6 +6,13 @@
     "type": "git",
     "url": "git@github.com:henrytseng/tictactoe.git"
   },
+  "keywords": [
+    "tictactoe",
+    "game",
+    "board",
+    "simple",
+    "tic-tac-toe"
+  ],
   "scripts": {
     "start": "node index.js"
   },
