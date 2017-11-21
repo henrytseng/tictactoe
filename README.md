@@ -1,6 +1,18 @@
 # README.md
 
-A self playing tic tac toe game
+A self playing tic tac toe game.  
+
+Allows user to play against computer player that finds the best, most successful move, from history.  
+
+
+
+## Setup
+
+Setup with
+
+```
+npm install
+```
 
 
 
