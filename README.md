@@ -9,27 +9,32 @@ A self playing tic tac toe game
 To run use:
 
 ```
-node index.js
+bin/tictactoe
 ```
 
 For command line arguments
 
 ```
-node index -?
+bin/tictactoe -?
+```
+
 
 
 ## Computer Players
 
 #### BadComputer
 
-Find a random move to make
+Find a random move to make based on all available moves on board.  
 
 
 #### MimicComputer
 
-Finds ratio of winning games according to the state of the game board.  
+Finds ratio of winning games according to the state of the game board.  Falls back to random move if no history on state of board is known.  
+
+
 
 
 ## Human Player
 
 Allows for user input to play computer
+
